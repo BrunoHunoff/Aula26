@@ -4,8 +4,8 @@ public class Fotografia extends ObraDeArte{
 
     private String tecnica;
 
-    public Fotografia(String titulo, String artista, int anoCriacao, String localizacaoMuseu, String tecnica) {
-        super(titulo, artista, anoCriacao, localizacaoMuseu);
+    public Fotografia(int id, String titulo, String artista, int anoCriacao, String localizacaoMuseu, String tecnica) {
+        super(id, titulo, artista, anoCriacao, localizacaoMuseu);
         this.tecnica = tecnica;
     }
 

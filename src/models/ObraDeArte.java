@@ -62,8 +62,6 @@ public abstract class ObraDeArte {
         return this;
     }
 
-
-
     @Override
     public String toString() {
         return titulo + ", " + artista + ", " + anoCriacao + ", " + localizacaoMuseu;

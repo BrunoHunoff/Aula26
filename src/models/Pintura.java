@@ -7,8 +7,8 @@ public class Pintura extends ObraDeArte{
 
     public Pintura() {}
 
-    public Pintura(String titulo, String artista, int anoCriacao, String localizacaoMuseu, String tipoTinta, String movimentoArtistico) {
-        super(titulo, artista, anoCriacao, localizacaoMuseu);
+    public Pintura(int id, String titulo, String artista, int anoCriacao, String localizacaoMuseu, String tipoTinta, String movimentoArtistico) {
+        super(id, titulo, artista, anoCriacao, localizacaoMuseu);
         this.tipoTinta = tipoTinta;
         this.movimentoArtistico = movimentoArtistico;
     }

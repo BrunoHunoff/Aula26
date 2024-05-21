@@ -6,8 +6,8 @@ public class Escultura extends ObraDeArte{
 
     public Escultura() {}
 
-    public Escultura(String titulo, String artista, int anoCriacao, String localizacaoMuseu, String material) {
-        super(titulo, artista, anoCriacao, localizacaoMuseu);
+    public Escultura(int id, String titulo, String artista, int anoCriacao, String localizacaoMuseu, String material) {
+        super(id, titulo, artista, anoCriacao, localizacaoMuseu);
         this.material = material;
     }
 
