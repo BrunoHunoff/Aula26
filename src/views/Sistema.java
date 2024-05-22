@@ -3,6 +3,7 @@ package views;
 import controllers.ObraDeArteController;
 import models.Escultura;
 import models.Fotografia;
+import models.ObraDeArte;
 import models.Pintura;
 
 public class Sistema {
@@ -47,15 +48,15 @@ public class Sistema {
                 break;
 
             case 5:
-                atualizarObra();
+                buscarObraTitulo();
                 break;
 
             case 6:
-                listarObras();
+                removerObra();
                 break;
 
             case 7:
-                salvarAlteracoes();
+                atualizarObra();
                 break;
 
             case 0:
@@ -76,13 +77,19 @@ public class Sistema {
         localizacao = Console.readString("Localização no museu");
     }
 
-    private static void adicionarPintura() {
+    private static String[] cadastrarPintura() {
         System.out.println("\nAdicionar pintura:");
         adicionarObra();
         String tipoTinta = Console.readString("Tipo de tinta");
         String movimentoArtistico = Console.readString("Movimento artístico");
+        String[] temp = {tipoTinta, movimentoArtistico};
+        return temp;
+    }
 
-        ObraDeArteController.adicionarObra(new Pintura(id, tipoTinta, artista, anoCriacao, localizacao, tipoTinta, movimentoArtistico));
+    private static void adicionarPintura() {
+        cadastrarPintura();
+        String[] temp = cadastrarPintura();
+        ObraDeArteController.adicionarObra(new Pintura(id, titulo, artista, anoCriacao, localizacao, temp[0], temp[1]));
         System.out.println("Obra cadastrada com sucesso!");
     }
 
@@ -105,5 +112,49 @@ public class Sistema {
     private static void buscarObraId() {
         System.out.println("\nBuscar Obra (ID): ");
         id = Console.readInt("ID");
+        try {
+            System.out.println(ObraDeArteController.buscarObra(id));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void buscarObraTitulo() {
+        System.out.println("\nBuscar Obra (Título):");
+        titulo = Console.readString("Título");
+
+        try {
+            System.out.println(ObraDeArteController.buscarObra(titulo));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void removerObra() {
+        System.out.println("\nRemover Obra:");
+        id = Console.readInt("ID");
+        try {
+            ObraDeArteController.excluirObra(id);
+            System.out.println("\nObra deletada com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void atualizarObra() {
+        System.out.println("\nAtualizar Obra:");
+        id = Console.readInt("ID");
+
+        try {
+            ObraDeArte temp = ObraDeArteController.buscarObra(id);
+
+            if ()
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+
     }
 }
