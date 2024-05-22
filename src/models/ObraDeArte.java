@@ -63,15 +63,16 @@ public abstract class ObraDeArte {
     }
 
     public static ObraDeArte fromString(String linha) throws Exception{
-        String[] linhaTemp = linha.split(":");
+        String[] linhaTemp = linha.split(": ");
         String[] linhaFinal = linhaTemp[1].split(", ");
-        if (linhaTemp[0] == "Pintura:") {
+
+        if (linhaTemp[0].equals("Pintura")) {
             return new Pintura(
                     Integer.parseInt(linhaFinal[0]),
                     linhaFinal[1], linhaFinal[2], Integer.parseInt(linhaFinal[3]), linhaFinal[4],
                     linhaFinal[5], linhaFinal[6]);
         }
-        if (linhaTemp[0] == "Escultura:") {
+        if (linhaTemp[0].equals("Escultura")) {
             return new Escultura(
                     Integer.parseInt(linhaFinal[0]),
                     linhaFinal[1], linhaFinal[2],
@@ -79,7 +80,7 @@ public abstract class ObraDeArte {
                     linhaFinal[4], linhaFinal[5]);
         }
 
-        if (linhaTemp[0] == "Fotografia:") {
+        if (linhaTemp[0].equals("Fotografia")) {
             return new Fotografia(
                     Integer.parseInt(linhaFinal[0]),
                     linhaFinal[1], linhaFinal[2],
@@ -91,6 +92,6 @@ public abstract class ObraDeArte {
 
     @Override
     public String toString() {
-        return titulo + ", " + artista + ", " + anoCriacao + ", " + localizacaoMuseu;
+        return id + ", " + titulo + ", " + artista + ", " + anoCriacao + ", " + localizacaoMuseu;
     }
 }

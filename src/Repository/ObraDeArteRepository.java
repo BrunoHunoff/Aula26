@@ -18,6 +18,7 @@ public abstract class ObraDeArteRepository {
     }
 
     public static void carregarObras() throws Exception {
+
         try (FileReader fileReader = new FileReader(FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String linha;

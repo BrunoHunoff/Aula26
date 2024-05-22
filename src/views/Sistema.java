@@ -1,5 +1,6 @@
 package views;
 
+import Repository.ObraDeArteRepository;
 import controllers.ObraDeArteController;
 import models.Escultura;
 import models.Fotografia;
@@ -59,6 +60,14 @@ public class Sistema {
                 atualizarObra();
                 break;
 
+            case 8:
+                listarObras();
+                break;
+
+            case 9:
+                salvar();
+                break;
+
             case 0:
                 sair();
                 break;
@@ -69,8 +78,22 @@ public class Sistema {
         }
     }
 
+    public static void executar() {
+        int op;
+
+        try {
+            ObraDeArteRepository.carregarObras();
+        } catch (Exception e) {}
+
+        do {
+            menu();
+            op = Console.readInt("Opção");
+            gerenciarOp(op);
+        } while (op != 0);
+    }
+
     private static void adicionarObra() {
-        id = Console.readInt("Id");
+
         titulo = Console.readString("Título");
         artista = Console.readString("Artista");
         anoCriacao = Console.readInt("Ano de criação");
@@ -78,7 +101,7 @@ public class Sistema {
     }
 
     private static String[] cadastrarPintura() {
-        System.out.println("\nAdicionar pintura:");
+        System.out.println("\nPintura:");
         adicionarObra();
         String tipoTinta = Console.readString("Tipo de tinta");
         String movimentoArtistico = Console.readString("Movimento artístico");
@@ -86,15 +109,27 @@ public class Sistema {
         return temp;
     }
 
+    private static void gerarId() {
+        try {
+            for (ObraDeArte obraDeArte : ObraDeArteController.listarObras()) {
+                id = obraDeArte.getId();
+            }
+            id += 1;
+        } catch (Exception e) {
+            id = 1;
+        }
+    }
+
     private static void adicionarPintura() {
-        cadastrarPintura();
+        gerarId();
         String[] temp = cadastrarPintura();
         ObraDeArteController.adicionarObra(new Pintura(id, titulo, artista, anoCriacao, localizacao, temp[0], temp[1]));
         System.out.println("Obra cadastrada com sucesso!");
     }
 
     private static void adicionarEscultura() {
-        System.out.println("\nAdicionar pintura:");
+        gerarId();
+        System.out.println("\nEscultura:");
         adicionarObra();
         String material = Console.readString("Material");
 
@@ -102,7 +137,8 @@ public class Sistema {
     }
 
     private static void adicionarFotografia() {
-        System.out.println("\nAdicionar fotografia:");
+        gerarId();
+        System.out.println("\nFotografia:");
         adicionarObra();
         String tecnica = Console.readString("Tecnica");
 
@@ -141,6 +177,43 @@ public class Sistema {
         }
     }
 
+    private static void atualizarPintura(Pintura obraDeArte) {
+        String[] tempCadastro = cadastrarPintura();
+
+        obraDeArte.setId(id);
+        obraDeArte.setTitulo(titulo);
+        obraDeArte.setArtista(artista);
+        obraDeArte.setAnoCriacao(anoCriacao);
+        obraDeArte.setLocalizacaoMuseu(localizacao);
+        obraDeArte.setTipoTinta(tempCadastro[0]);
+        obraDeArte.setMovimentoArtistico(tempCadastro[1]);
+    }
+
+    private static void atualizarEscultura(Escultura obraDeArte) {
+        System.out.println("\nEscultura:");
+        adicionarObra();
+        String material = Console.readString("Material");
+
+        obraDeArte.setId(id);
+        obraDeArte.setTitulo(titulo);
+        obraDeArte.setArtista(artista);
+        obraDeArte.setAnoCriacao(anoCriacao);
+        obraDeArte.setLocalizacaoMuseu(localizacao);
+        obraDeArte.setMaterial(material);
+    }
+
+    private static void atualizarFotografia(Fotografia obraDeArte) {
+        System.out.println("\nFotografia:");
+        adicionarObra();
+        String tecnica = Console.readString("Tecnica");
+        obraDeArte.setId(id);
+        obraDeArte.setTitulo(titulo);
+        obraDeArte.setArtista(artista);
+        obraDeArte.setAnoCriacao(anoCriacao);
+        obraDeArte.setLocalizacaoMuseu(localizacao);
+        obraDeArte.setTecnica(tecnica);
+    }
+
     private static void atualizarObra() {
         System.out.println("\nAtualizar Obra:");
         id = Console.readInt("ID");
@@ -148,7 +221,18 @@ public class Sistema {
         try {
             ObraDeArte temp = ObraDeArteController.buscarObra(id);
 
-            if ()
+            if (temp instanceof Pintura) {
+                atualizarPintura((Pintura)temp);
+                System.out.println("\nRegistro da Pintura atualizado com sucesso!");
+            } else if (temp instanceof Escultura) {
+                atualizarEscultura((Escultura)temp);
+                System.out.println("\nRegistro da Escultura atualizado com sucesso");
+            } else if (temp instanceof Fotografia) {
+                atualizarFotografia((Fotografia)temp);
+                System.out.println("\nRegistro da Fotografia atualizado com sucesso");
+            } else {
+                throw new Exception("Não foi possível atualizar o registro");
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -156,5 +240,46 @@ public class Sistema {
         }
 
 
+    }
+
+    private static void listarObras() {
+        System.out.println("\nObras de arte:");
+        try {
+            for (ObraDeArte obraDeArte : ObraDeArteController.listarObras()) {
+                System.out.println(obraDeArte);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void salvar() {
+        try {
+            ObraDeArteRepository.salvarObras();
+            System.out.println("\nAlterações salvas com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void sair() {
+        System.out.println("\nSair");
+        System.out.println("Deseja salvar as alterações?(s/n)");
+
+        while (true){
+
+            String op = Console.readString("Opção");
+            if (op.equals("s") || op.equals("S")) {
+                salvar();
+                System.out.println("Sistema encerrado!");
+                break;
+            } else if (op.equals("n") || op.equals("N")) {
+                System.out.println("Sistema encerrado!");
+                break;
+            }
+            else {
+                System.out.println("Opção inválida!");
+            }
+        }
     }
 }

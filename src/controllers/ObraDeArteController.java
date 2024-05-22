@@ -32,7 +32,7 @@ public abstract class ObraDeArteController {
 
     public static ObraDeArte buscarObra(String titulo) throws Exception{
         for (ObraDeArte obraDeArte: listarObras()) {
-            if (obraDeArte.getTitulo() == titulo) {
+            if (obraDeArte.getTitulo().equals(titulo)) {
                 return obraDeArte;
             }
         }
@@ -82,4 +82,5 @@ public abstract class ObraDeArteController {
         fotografia.setLocalizacaoMuseu(localizacaoMuseu);
         fotografia.setTecnica(tecnica);
     }
+
 }
