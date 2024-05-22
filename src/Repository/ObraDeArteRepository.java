@@ -3,24 +3,21 @@ package Repository;
 import controllers.ObraDeArteController;
 import models.ObraDeArte;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 public abstract class ObraDeArteRepository {
-    private static final  String FILE = "obras.txt";
+    private static final String FILE = "obras.txt";
 
-    public static void salvarObras() throws Exception{
+    public static void salvarObras() throws Exception {
         try (FileWriter fileWriter = new FileWriter(FILE);
-             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             for (ObraDeArte obraDeArte : ObraDeArteController.listarObras()) {
                 bufferedWriter.write(obraDeArte + "\n");
             }
         }
     }
 
-    public static void carregarObras() throws Exception{
+    public static void carregarObras() throws Exception {
         try (FileReader fileReader = new FileReader(FILE);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String linha;
