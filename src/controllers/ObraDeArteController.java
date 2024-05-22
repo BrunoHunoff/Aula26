@@ -21,7 +21,7 @@ public abstract class ObraDeArteController {
         return listaObras;
     }
 
-    public static ObraDeArte buscarObraId(int id) throws Exception{
+    public static ObraDeArte buscarObra(int id) throws Exception{
         for(ObraDeArte obra: listaObras) {
             if (obra.getId() == id) {
                 return obra;
@@ -30,7 +30,7 @@ public abstract class ObraDeArteController {
         throw new Exception("Obra não encontrada");
     }
 
-    public static ObraDeArte buscarObraTitulo(String titulo) throws Exception{
+    public static ObraDeArte buscarObra(String titulo) throws Exception{
         for (ObraDeArte obraDeArte: listarObras()) {
             if (obraDeArte.getTitulo() == titulo) {
                 return obraDeArte;

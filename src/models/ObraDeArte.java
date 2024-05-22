@@ -62,6 +62,33 @@ public abstract class ObraDeArte {
         return this;
     }
 
+    public static ObraDeArte fromString(String linha) throws Exception{
+        String[] linhaTemp = linha.split(":");
+        String[] linhaFinal = linhaTemp[1].split(", ");
+        if (linhaTemp[0] == "Pintura:") {
+            return new Pintura(
+                    Integer.parseInt(linhaFinal[0]),
+                    linhaFinal[1], linhaFinal[2], Integer.parseInt(linhaFinal[3]), linhaFinal[4],
+                    linhaFinal[5], linhaFinal[6]);
+        }
+        if (linhaTemp[0] == "Escultura:") {
+            return new Escultura(
+                    Integer.parseInt(linhaFinal[0]),
+                    linhaFinal[1], linhaFinal[2],
+                    Integer.parseInt(linhaFinal[3]),
+                    linhaFinal[4], linhaFinal[5]);
+        }
+
+        if (linhaTemp[0] == "Fotografia:") {
+            return new Fotografia(
+                    Integer.parseInt(linhaFinal[0]),
+                    linhaFinal[1], linhaFinal[2],
+                    Integer.parseInt(linhaFinal[3]),
+                    linhaFinal[4], linhaFinal[5]);
+        }
+        throw new Exception("Impossível instanciar objeto!");
+    }
+
     @Override
     public String toString() {
         return titulo + ", " + artista + ", " + anoCriacao + ", " + localizacaoMuseu;
