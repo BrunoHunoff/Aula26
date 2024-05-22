@@ -21,6 +21,48 @@ public abstract class ObraDeArteController {
         return listaObras;
     }
 
+    public static ArrayList<Pintura> listarPinturas() throws Exception{
+        ArrayList<Pintura> temp = new ArrayList<>();
+
+        for (ObraDeArte obraDeArte: listarObras()) {
+            if (obraDeArte instanceof Pintura) {
+                temp.add((Pintura) obraDeArte);
+            }
+        }
+        if (temp.isEmpty()) {
+            throw new Exception("Não há pinturas cadastradas!");
+        }
+        return  temp;
+    }
+
+    public static ArrayList<Escultura> listarEsculturas() throws Exception{
+        ArrayList<Escultura> temp = new ArrayList<>();
+
+        for (ObraDeArte obraDeArte: listarObras()) {
+            if (obraDeArte instanceof Escultura) {
+                temp.add((Escultura) obraDeArte);
+            }
+        }
+        if (temp.isEmpty()) {
+            throw new Exception("Não há esculturas cadastradas!");
+        }
+        return  temp;
+    }
+
+    public static ArrayList<Fotografia> listarFotografias() throws Exception {
+        ArrayList<Fotografia> temp = new ArrayList<>();
+
+        for (ObraDeArte obraDeArte: listarObras()) {
+            if (obraDeArte instanceof Fotografia) {
+                temp.add((Fotografia) obraDeArte);
+            }
+        }
+        if (temp.isEmpty()) {
+            throw new Exception("Não há fotografias cadastradas!");
+        }
+        return  temp;
+    }
+
     public static ObraDeArte buscarObra(int id) throws Exception{
         for(ObraDeArte obra: listaObras) {
             if (obra.getId() == id) {
@@ -49,10 +91,9 @@ public abstract class ObraDeArteController {
         throw new Exception("Obra não encontrada!");
     }
 
-    public static void atualizarObra(Pintura pintura, int id, String titulo,
+    public static void atualizarObra(Pintura pintura, String titulo,
                                      String artista, int anoCriacao, String localizacaoMuseu,
                                      String tipoTinta, String movimentoArtistico) {
-        pintura.setId(id);
         pintura.setTitulo(titulo);
         pintura.setArtista(artista);
         pintura.setAnoCriacao(anoCriacao);
@@ -61,10 +102,9 @@ public abstract class ObraDeArteController {
         pintura.setMovimentoArtistico(movimentoArtistico);
     }
 
-    public static void atualizarObra(Escultura escultura, int id, String titulo,
+    public static void atualizarObra(Escultura escultura, String titulo,
                                      String artista, int anoCriacao, String localizacaoMuseu,
                                      String material) {
-        escultura.setId(id);
         escultura.setTitulo(titulo);
         escultura.setArtista(artista);
         escultura.setAnoCriacao(anoCriacao);
@@ -72,10 +112,9 @@ public abstract class ObraDeArteController {
         escultura.setMaterial(material);
     }
 
-    public static void atualizarObra(Fotografia fotografia, int id, String titulo,
+    public static void atualizarObra(Fotografia fotografia, String titulo,
                                      String artista, int anoCriacao, String localizacaoMuseu,
                                      String tecnica) {
-        fotografia.setId(id);
         fotografia.setTitulo(titulo);
         fotografia.setArtista(artista);
         fotografia.setAnoCriacao(anoCriacao);

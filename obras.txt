@@ -1,1 +1,2 @@
 Pintura: 2, teste1, teste1, 2, teste1, teste1, teste1
+Escultura: 3, teste, teste, 2, teste, teste

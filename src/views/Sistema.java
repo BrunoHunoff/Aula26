@@ -7,6 +7,8 @@ import models.Fotografia;
 import models.ObraDeArte;
 import models.Pintura;
 
+import java.sql.ClientInfoStatus;
+
 public class Sistema {
 
     private static int id;
@@ -180,13 +182,7 @@ public class Sistema {
     private static void atualizarPintura(Pintura obraDeArte) {
         String[] tempCadastro = cadastrarPintura();
 
-        obraDeArte.setId(id);
-        obraDeArte.setTitulo(titulo);
-        obraDeArte.setArtista(artista);
-        obraDeArte.setAnoCriacao(anoCriacao);
-        obraDeArte.setLocalizacaoMuseu(localizacao);
-        obraDeArte.setTipoTinta(tempCadastro[0]);
-        obraDeArte.setMovimentoArtistico(tempCadastro[1]);
+        ObraDeArteController.atualizarObra(obraDeArte, titulo, artista, anoCriacao, localizacao, tempCadastro[0], tempCadastro[1]);
     }
 
     private static void atualizarEscultura(Escultura obraDeArte) {
@@ -194,24 +190,14 @@ public class Sistema {
         adicionarObra();
         String material = Console.readString("Material");
 
-        obraDeArte.setId(id);
-        obraDeArte.setTitulo(titulo);
-        obraDeArte.setArtista(artista);
-        obraDeArte.setAnoCriacao(anoCriacao);
-        obraDeArte.setLocalizacaoMuseu(localizacao);
-        obraDeArte.setMaterial(material);
+        ObraDeArteController.atualizarObra(obraDeArte, titulo, artista,anoCriacao, localizacao, material);
     }
 
     private static void atualizarFotografia(Fotografia obraDeArte) {
         System.out.println("\nFotografia:");
         adicionarObra();
         String tecnica = Console.readString("Tecnica");
-        obraDeArte.setId(id);
-        obraDeArte.setTitulo(titulo);
-        obraDeArte.setArtista(artista);
-        obraDeArte.setAnoCriacao(anoCriacao);
-        obraDeArte.setLocalizacaoMuseu(localizacao);
-        obraDeArte.setTecnica(tecnica);
+        ObraDeArteController.atualizarObra(obraDeArte, titulo, artista, anoCriacao, localizacao, tecnica);
     }
 
     private static void atualizarObra() {
@@ -242,14 +228,73 @@ public class Sistema {
 
     }
 
-    private static void listarObras() {
-        System.out.println("\nObras de arte:");
+    private static void listarTodas() {
         try {
             for (ObraDeArte obraDeArte : ObraDeArteController.listarObras()) {
                 System.out.println(obraDeArte);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private static void listarPinturas() {
+        System.out.println("\nPinturas: ");
+        try {
+            for (Pintura pintura: ObraDeArteController.listarPinturas()) {
+                System.out.println(pintura);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void listarEsculturas() {
+        System.out.println("\nEsculturas:");
+        try {
+            for (Escultura escultura: ObraDeArteController.listarEsculturas()) {
+                System.out.println(escultura);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void listarFotografias() {
+        System.out.println("\nFotografias:");
+        try {
+            for (Fotografia fotografia: ObraDeArteController.listarFotografias()) {
+                System.out.println(fotografia);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void listarObras() {
+        System.out.println("\nObras de arte:");
+        System.out.println("1 - listar todas");
+        System.out.println("2 - listar pinturas");
+        System.out.println("3 - listar esculturas");
+        System.out.println("4 - listar fotografias");
+        int op = Console.readInt("Opção");
+
+        switch (op) {
+            case 1:
+                listarTodas();
+                break;
+            case 2:
+                listarPinturas();
+                break;
+            case 3:
+                listarEsculturas();
+                break;
+            case 4:
+                listarFotografias();
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                return;
         }
     }
 
